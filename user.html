@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz User</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="quiz-container" class="hide">
+        <button id="home-btn" class="btn home-btn">Home</button>
+        <div id="saved-quizzes-container">
+            <h2>Available Quizzes</h2>
+            <div id="saved-quizzes-list"></div>
+        </div>
+        <div id="question-container" class="hide">
+            <div id="question">Question text</div>
+            <div id="answer-buttons" class="btn-container"></div>
+            <button id="next-btn" class="btn hide">Next</button>
+        </div>
+        <div id="score-container" class="hide">
+            <span id="score">Score: 0</span>
+            <button id="submit-score-btn" class="btn">Submit Score</button>
+        </div>
+    </div>
+
+    <div id="login-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" required>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" required>
+            <button type="submit" class="btn">Login</button>
+            <p>Don't have an account? <span id="show-register-form">Register</span></p>
+        </form>
+    </div>
+
+    <div id="register-container" class="hide">
+        <h2>Register</h2>
+        <form id="register-form">
+            <label for="register-username">Username:</label>
+            <input type="text" id="register-username" required>
+            <label for="register-password">Password:</label>
+            <input type="password" id="register-password" required>
+            <button type="submit" class="btn">Register</button>
+            <p>Already have an account? <span id="show-login-form">Login</span></p>
+        </form>
+    </div>
+
+    <button id="user-page-btn" class="btn hide">User Page</button>
+    <button id="admin-page-btn" class="btn hide">Admin Page</button>
+
+    <script src="user.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyChAKRzaWNmXVL6FAdv16RNwPcKky4maUo",
+          authDomain: "adminanduser-de348.firebaseapp.com",
+          databaseURL: "https://adminanduser-de348-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "adminanduser-de348",
+          storageBucket: "adminanduser-de348.appspot.com",
+          messagingSenderId: "330482891627",
+          appId: "1:330482891627:web:ccf590169c80efafddea2e"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+       
+        function submitScore() {
+            const username = localStorage.getItem('loggedInUser');
+            const userScores = JSON.parse(localStorage.getItem('userScores')) || {};
+            
+            if (!username) {
+                alert('Please log in to submit your score.');
+                return;
+            }
+
+            if (!userScores[username]) {
+                userScores[username] = [];
+            }
+
+            userScores[username].push(score);
+            localStorage.setItem('userScores', JSON.stringify(userScores));
+            alert('Score submitted successfully!');
+            
+            // Redirect to home page or reset quiz
+            //window.location.href = 'user.html';
+        }
+
+
+
+         const database = getDatabase(app);
+        console.log(database);
+        document.getElementById("submit-score-btn").addEventListener('click', function(e){
+        e.preventDefault();
+        submitScore();
+        const rawUsers = localStorage.getItem("users");
+        const users = JSON.parse(rawUsers);
+        const username = users[0].username, password = users[0].password;
+        set(ref(database, 'users/' + document.getElementById("register-username").value),{
+            username : username,
+            password : password,
+            score : window.score
+      });
+  });
+      </script>
+</body>
+</html>

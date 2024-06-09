@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="quiz-container">
+        <button id="home-btn" class="btn home-btn">Home</button>
+        <div id="create-quiz-container">
+            <h2>Create a Quiz</h2>
+            <div id="question-form">
+                <input type="text" id="question-input" placeholder="Enter your question">
+                <div id="answers-container">
+                    <input type="text" class="answer-input" placeholder="Answer 1">
+                    <input type="radio" class="correct-answer" name="correct-answer"> <!-- Radio button for answer 1 -->
+                    <input type="text" class="answer-input" placeholder="Answer 2">
+                    <input type="radio" class="correct-answer" name="correct-answer"> <!-- Radio button for answer 2 -->
+                    <input type="text" class="answer-input" placeholder="Answer 3">
+                    <input type="radio" class="correct-answer" name="correct-answer"> <!-- Radio button for answer 3 -->
+                    <input type="text" class="answer-input" placeholder="Answer 4">
+                    <input type="radio" class="correct-answer" name="correct-answer"> <!-- Radio button for answer 4 -->
+                </div>
+                <button id="add-question-btn" class="btn">Add Question</button>
+            </div>
+            <button id="save-quiz-btn" class="btn">Save Quiz</button>
+        </div>
+        <div id="saved-quizzes-container">
+            <h2>Saved Quizzes</h2>
+            <div id="saved-quizzes-list"></div>
+        </div>
+    </div>
+
+    <button id="user-page-btn" class="btn">User Page</button>
+    <button id="admin-page-btn" class="btn">Admin Page</button>
+
+    <!-- Rest of your HTML content -->
+
+    <script>
+        const userPageButton = document.getElementById('user-page-btn');
+        const adminPageButton = document.getElementById('admin-page-btn');
+
+        userPageButton.addEventListener('click', () => {
+            window.location.href = 'user.html';
+        });
+
+        adminPageButton.addEventListener('click', () => {
+            window.location.href = 'admin.html';
+        });
+    </script>
+
+    <script src="admin.js"></script>
+</body>
+</html>
